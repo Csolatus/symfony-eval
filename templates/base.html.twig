@@ -12,6 +12,55 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar">
+            <a href="/" class="navbar-brand">
+                <span>⚫️</span> sf-commerce
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="/" class="navbar-link">Home</a></li>
+                <li><a href="/shop" class="navbar-link">Shop</a></li> 
+                <li><a href="/cart" class="navbar-link">Cart</a></li>
+            </ul>
+            <div class="navbar-actions">
+                {% if app.user %}
+                    <a href="/logout" class="btn-nav btn-nav-secondary">Logout</a>
+                {% else %}
+                    <a href="/login" class="btn-nav btn-nav-secondary">Login</a>
+                    <a href="/register" class="btn-nav btn-nav-primary">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>sf-commerce</h4>
+                    <p>Premium e-commerce experience built with Symfony.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Categories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; {{ "now"|date("Y") }} sf-commerce. All rights reserved.
+            </div>
+        </footer>
     </body>
 </html>

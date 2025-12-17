@@ -1,3 +1,26 @@
-body {
-    background-color: skyblue;
+/* Variables */
+:root {
+    --primary-color: #0f172a;
+    --text-color: #334155;
+    --surface-color: #ffffff;
+    --accent-color: #2563eb;
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Components */
+@import url('components/navbar.css');
+@import url('components/footer.css');
+@import url('components/card.css');
+
+/* Pages */
+@import url('pages/home.css');
