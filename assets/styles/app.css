@@ -1,26 +1,14 @@
-/* Variables */
-:root {
-    --primary-color: #0f172a;
-    --text-color: #334155;
-    --surface-color: #ffffff;
-    --accent-color: #2563eb;
-    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
+@import './variables.css';
+@import './reset.css';
 
-body {
-    margin: 0;
-    font-family: var(--font-family);
-    color: var(--text-color);
-    background-color: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+/* Layout */
+@import './layout/container.css';
+@import './layout/grid.css';
+@import './layout/header.css';
+@import './layout/footer.css';
 
 /* Components */
-@import url('components/navbar.css');
-@import url('components/footer.css');
-@import url('components/card.css');
-
-/* Pages */
-@import url('pages/home.css');
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/forms.css';
+@import './components/alerts.css';

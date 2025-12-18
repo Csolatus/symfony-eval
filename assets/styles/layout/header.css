@@ -1,0 +1,52 @@
+/* assets/styles/layout/header.css */
+header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.nav-links {
+    display: none;
+    gap: var(--spacing-lg);
+}
+
+.nav-links a {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--color-primary);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+}

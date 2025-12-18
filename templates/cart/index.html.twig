@@ -1,20 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Shopping Cart{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Shopping Cart</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if items|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>
+                             <img src="{{ item.product.image }}" alt="{{ item.product.name }}" width="50">
+                             <a href="{{ path('app_product_detail', {id: item.product.id}) }}">
+                                {{ item.product.name }}
+                            </a>
+                        </td>
+                        <td>{{ item.product.price / 100 }} €</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ (item.product.price * item.quantity) / 100 }} €</td>
+                        <td>
+                            <a href="#">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Applications/MAMP/htdocs/composer&makerDEV2/eval/src/Controller/CartController.php</code></li>
-        <li>Your template at <code>/Applications/MAMP/htdocs/composer&makerDEV2/eval/templates/cart/index.html.twig</code></li>
-    </ul>
-</div>
+        <div>
+            <h2>Order summary</h2>
+            <p>Total: {{ total / 100 }} €</p>
+            <a href="{{ path('app_checkout') }}">Checkout</a>
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{{ path('app_product_index') }}">Start Shopping</a>
+    {% endif %}
 {% endblock %}
