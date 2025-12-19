@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <h1>Mon Profil</h1>
+
+    <div class="grid md-grid-cols-3" style="align-items: start;">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h4" style="margin-bottom: 1rem;">Infos compte</h2>
+                <div style="font-size: 5rem; margin-bottom: 1rem;">
+                    👤
+                </div>
+                <p><strong>Nom :</strong> {{ app.user.fullName }}</p>
+                <p><strong>Email :</strong> {{ app.user.email }}</p>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="{{ path('app_profile_edit') }}" class="btn btn-secondary">Modifier le profil</a>
+                    
+                    <form method="post" action="{{ path('app_profile_delete') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');" style="display: inline-block;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_account') }}">
+                        <button class="btn btn-danger">Supprimer le compte</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div style="grid-column: span 2;">
+            <h2 class="h4" style="margin-bottom: 1rem;">Commandes récentes</h2>
+            
+            {% if app.user.orders|length > 0 %}
+                <div class="grid gap-4">
+                    {% for order in app.user.orders %}
+                        <div class="card">
+                            <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div>
+                                    <h3 class="h5" style="margin-bottom: 0.25rem;">Commande #{{ order.reference }}</h3>
+                                    <p style="color: var(--color-text-muted); margin-bottom: 0;">
+                                        {{ order.createdAt|date('d/m/Y') }} • {{ order.status|capitalize }}
+                                    </p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem;">{{ order.total }} €</div>
+                                    <a href="{{ path('app_order_show', {reference: order.reference}) }}" class="btn btn-sm btn-secondary">Voir détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: var(--color-text-muted);">Aucune commande pour le moment.</p>
+                <div style="margin-top: 1rem;">
+                    <a href="{{ path('app_product_index') }}" class="btn btn-primary">Commencer vos achats</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

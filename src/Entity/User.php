@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $address = null;
 
     #[ORM\Column(length: 10, nullable: true)]
-    private ?string $zipCode = null;
+    private ?string $postalCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $city = null;
@@ -130,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $data = (array) $this;
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
-        
+
         return $data;
     }
 
@@ -158,14 +158,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getPostalCode(): ?string
     {
-        return $this->zipCode;
+        return $this->postalCode;
     }
 
-    public function setZipCode(?string $zipCode): static
+    public function setPostalCode(?string $postalCode): static
     {
-        $this->zipCode = $zipCode;
+        $this->postalCode = $postalCode;
 
         return $this;
     }

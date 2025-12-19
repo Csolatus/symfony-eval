@@ -10,10 +10,20 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ProductController extends AbstractController
 {
     #[Route('/shop', name: 'app_product_index')]
-    public function index(ProductRepository $productRepository): Response
+    public function index(\Symfony\Component\HttpFoundation\Request $request, ProductRepository $productRepository, \App\Repository\CategoryRepository $categoryRepository): Response
     {
+        $categoryId = $request->query->get('category');
+
+        if ($categoryId) {
+            $products = $productRepository->findBy(['category' => $categoryId]);
+        } else {
+            $products = $productRepository->findAll();
+        }
+
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
+            'categories' => $categoryRepository->findAll(),
+            'currentCategory' => $categoryId,
         ]);
     }
 

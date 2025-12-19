@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions d'utilisation{% endblock %}
+
+{% block body_class %}legal-page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body.legal-page {
+            background-image: url('{{ asset('images/privacy/hidden-surprise.jpg') }}');
+            background-size: cover;
+            background-position: center 80px;
+            background-repeat: no-repeat;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Add transparency to card to see bg */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Conditions d'utilisation</h1>
+    <div class="card">
+        <div class="card-body">
+            <p>I just wanna be part of your SYMFONYYYYYYY</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,22 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Shop Collection{% endblock %}
+{% block title %}Nos produits{% endblock %}
 
 {% block body %}
-    <h1>Shop Collection</h1>
+    <h1>Notre Collection</h1>
 
-    {% for product in products %}
-        <article>
-            <img src="https://placehold.co/400x300?text={{ product.name|url_encode }}" alt="{{ product.name }}">
-            <div>
-                <div>{{ product.category ? product.category.name : 'Uncategorized' }}</div>
-                <h3>
-                    <a href="{{ path('app_product_detail', {id: product.id}) }}">{{ product.name }}</a>
-                </h3>
-                <div>{{ product.price / 100 }} €</div>
+    <div style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="{{ path('app_product_index') }}" class="btn {{ currentCategory is null ? 'btn-primary' : 'btn-secondary' }}">
+            Tout voir
+        </a>
+        {% for category in categories %}
+            <a href="{{ path('app_product_index', {category: category.id}) }}" class="btn {{ currentCategory == category.id ? 'btn-primary' : 'btn-secondary' }}">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="grid md-grid-cols-2 lg-grid-cols-4">
+        {% for product in products %}
+            <div class="card">
+                {% if product.imageName %}
+                    <img src="{{ asset('images/products/' ~ product.imageName) }}" alt="{{ product.name }}" class="card-img">
+                {% else %}
+                    <img src="https://placehold.co/400x300?text={{ product.name|url_encode }}" alt="{{ product.name }}" class="card-img">
+                {% endif %}
+                <div class="card-body">
+                    <div style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 0.5rem;">
+                        {{ product.category ? product.category.name : 'Sans catégorie' }}
+                    </div>
+                    <h2 class="card-title">{{ product.name }}</h2>
+                    <p class="card-price">{{ product.price }} €</p>
+                    
+                    <div style="margin-top: 1rem; display: grid; gap: 0.5rem;">
+                        <a href="{{ path('app_product_detail', {id: product.id}) }}" class="btn btn-secondary btn-block">
+                            Voir détails
+                        </a>
+                        <a href="{{ path('app_cart_add', {id: product.id}) }}" class="btn btn-primary btn-block">
+                            Ajouter au panier
+                        </a>
+                    </div>
+                </div>
             </div>
-        </article>
-    {% else %}
-        <p>No products found.</p>
-    {% endfor %}
+        {% else %}
+            <p>Aucun produit trouvé</p>
+        {% endfor %}
+    </div>
 {% endblock %}

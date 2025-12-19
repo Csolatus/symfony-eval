@@ -12,7 +12,79 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="flex flex-col {% block body_class %}{% endblock %}" style="min-height: 100vh;">
+        <header>
+            <div class="container navbar">
+                <a href="{{ path('app_home') }}" class="brand">
+                    ⚡️ SF Commerce
+                </a>
+
+                <nav class="nav-links">
+                    <a href="{{ path('app_home') }}">Accueil</a>
+                    <a href="{{ path('app_product_index') }}">Boutique</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_profile') }}">Profil</a>
+                    {% endif %}
+                </nav>
+
+                <div class="nav-actions">
+                    <a href="{{ path('app_cart') }}" class="btn btn-secondary">
+                        Panier
+                    </a>
+                    
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <main class="container" style="flex: 1; padding-top: 2rem; padding-bottom: 2rem;">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label == 'error' ? 'danger' : 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer>
+            <div class="container footer-content">
+                <div class="footer-section">
+                    <h3>SF Commerce</h3>
+                    <ul>
+                        <li><a href="{{ path('app_about') }}">À propos</a></li>
+                        <li><a href="#">Carrières</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Boutique</h3>
+                    <ul>
+                        <li><a href="{{ path('app_product_index') }}">Tous les produits</a></li>
+                        <li><a href="#">Nouveautés</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                        <li><a href="#">Livraison</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Légal</h3>
+                    <ul>
+                        <li><a href="{{ path('app_privacy') }}">Politique de confidentialité</a></li>
+                        <li><a href="{{ path('app_terms') }}">Conditions d'utilisation</a></li>
+                        <li><a href="{{ path('app_about') }}">À propos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

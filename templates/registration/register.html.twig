@@ -1,17 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Create Account</h1>
+    <div style="max-width: 500px; margin: 0 auto;">
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center; margin-bottom: 2rem;">Créer un compte</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(registrationForm) }}
+                    <div class="form-group">
+                        {{ form_label(registrationForm.fullName, 'Nom complet') }}
+                        {{ form_widget(registrationForm.fullName) }}
+                        {{ form_errors(registrationForm.fullName) }}
+                    </div>
 
-        <button type="submit">Register</button>
-    {{ form_end(registrationForm) }}
+                    <div class="form-group">
+                        {{ form_label(registrationForm.email, 'Email') }}
+                        {{ form_widget(registrationForm.email) }}
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
 
-    <p>Already have an account? <a href="{{ path('app_login') }}">Sign in</a></p>
+                    <div class="form-group">
+                        {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+                        {{ form_widget(registrationForm.plainPassword) }}
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+                    
+                    <div class="form-group">
+                         {{ form_label(registrationForm.address, 'Adresse') }}
+                         {{ form_widget(registrationForm.address) }}
+                         {{ form_errors(registrationForm.address) }}
+                    </div>
+                    
+                    <div class="grid grid-cols-2" style="gap: 1rem;">
+                        <div class="form-group">
+                             {{ form_label(registrationForm.postalCode, 'Code postal') }}
+                             {{ form_widget(registrationForm.postalCode) }}
+                             {{ form_errors(registrationForm.postalCode) }}
+                        </div>
+                        <div class="form-group">
+                             {{ form_label(registrationForm.city, 'Ville') }}
+                             {{ form_widget(registrationForm.city) }}
+                             {{ form_errors(registrationForm.city) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                        {{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions') }}
+                        {{ form_errors(registrationForm.agreeTerms) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <p>Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+                    </div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

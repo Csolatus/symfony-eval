@@ -3,21 +3,40 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-    <div>
-        <img src="https://placehold.co/600x600?text={{ product.name|url_encode }}" alt="{{ product.name }}">
+    <div style="margin-bottom: 2rem;">
+        <a href="{{ path('app_product_index') }}" style="color: var(--color-text-muted); text-decoration: none;">&larr; Retour à la boutique</a>
     </div>
-    
-    <div>
-        <span>{{ product.category ? product.category.name : 'Uncategorized' }}</span>
-        <h1>{{ product.name }}</h1>
-        <div>{{ product.price / 100 }} €</div>
-        
+
+    <div class="grid md-grid-cols-2" style="gap: 4rem; align-items: start;">
         <div>
-            <p>{{ product.description }}</p>
+            {% if product.imageName %}
+                <img src="{{ asset('images/products/' ~ product.imageName) }}" alt="{{ product.name }}" style="width: 100%; border-radius: var(--radius);">
+            {% else %}
+                <img src="https://placehold.co/600x400?text={{ product.name|url_encode }}" alt="{{ product.name }}" style="width: 100%; border-radius: var(--radius);">
+            {% endif %}
         </div>
         
-        <form action="{{ path('app_cart_add', {id: product.id}) }}" method="post">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <div>
+            <div style="color: var(--color-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; margin-bottom: 0.5rem;">
+                {{ product.category ? product.category.name : 'Sans catégorie' }}
+            </div>
+            
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1;">{{ product.name }}</h1>
+            
+            <div style="font-size: 1.5rem; margin-bottom: 2rem;">{{ product.price }} €</div>
+            
+            <div style="line-height: 1.8; color: var(--color-text-muted); margin-bottom: 2rem;">
+                {{ product.description|raw }}
+            </div>
+
+            <a href="{{ path('app_cart_add', {id: product.id}) }}" class="btn btn-primary btn-block" style="font-size: 1.1rem; padding: 1rem;">
+                Ajouter au panier
+            </a>
+            
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); font-size: 0.875rem; color: var(--color-text-muted);">
+                <p>Livraison gratuite pour toute commande.</p>
+                <p>Retour sous 30 jours.</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

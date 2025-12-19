@@ -1,39 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sign in to your account{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <h2>Sign in to your account</h2>
-    <p>
-        Or <a href="{{ path('app_register') }}">create a new account</a>
-    </p>
+    <div style="max-width: 400px; margin: 0 auto;">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <form method="post">
-        {% if error %}
-            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center; margin-bottom: 2rem;">Connexion</h1>
 
-        <div>
-            <label for="username">Email address</label>
-            <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="_password" id="password" autocomplete="current-password" required>
-        </div>
-        
-        <div>
-            <a href="{{ path('app_forgot_password_request') }}">Forgot password?</a>
-        </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                    </div>
 
-        <div>
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                    </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit">Sign in</button>
-    </form>
+                    <div class="checkbox mb-3" style="margin-bottom: 1rem;">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Se connecter
+                    </button>
+                    
+                    <div style="margin-top: 1rem; text-align: center; font-size: 0.875rem;">
+                         <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p>Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a></p>
+            </div>
+        </form>
+    </div>
 {% endblock %}

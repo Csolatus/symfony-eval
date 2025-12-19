@@ -1,48 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Shopping Cart{% endblock %}
+{% block title %}Votre Panier{% endblock %}
 
 {% block body %}
-    <h1>Shopping Cart</h1>
+    <h1>Votre Panier</h1>
 
-    {% if items|length > 0 %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items %}
+    {% if items | length > 0 %}
+        <div class="card">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                             <img src="{{ item.product.image }}" alt="{{ item.product.name }}" width="50">
-                             <a href="{{ path('app_product_detail', {id: item.product.id}) }}">
-                                {{ item.product.name }}
-                            </a>
-                        </td>
-                        <td>{{ item.product.price / 100 }} €</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ (item.product.price * item.quantity) / 100 }} €</td>
-                        <td>
-                            <a href="#">Remove</a>
-                        </td>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.product.price }} €</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <a href="{{ path('app_cart_decrease', {'id': item.product.id}) }}" class="btn btn-sm btn-secondary">-</a>
+                                    <span>{{ item.quantity }}</span>
+                                    <a href="{{ path('app_cart_add', {'id': item.product.id}) }}" class="btn btn-sm btn-secondary">+</a>
+                                </div>
+                            </td>
+                            <td>{{ item.product.price * item.quantity }} €</td>
+                            <td>
+                                <a href="{{ path('app_cart_remove', {'id': item.product.id}) }}" class="text-danger">Retirer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right;"><strong>Total :</strong></td>
+                        <td colspan="2"><strong>{{ total }} €</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
-        <div>
-            <h2>Order summary</h2>
-            <p>Total: {{ total / 100 }} €</p>
-            <a href="{{ path('app_checkout') }}">Checkout</a>
+        <div style="margin-top: 2rem; text-align: right;">
+            <a href="{{ path('app_checkout') }}" class="btn btn-primary">Passer la commande</a>
         </div>
     {% else %}
-        <p>Your cart is empty.</p>
-        <a href="{{ path('app_product_index') }}">Start Shopping</a>
+        <div class="card">
+            <div class="card-body" style="text-align: center; padding: 4rem 2rem;">
+                <p style="margin-bottom: 2rem; font-size: 1.25rem;">Votre panier est vide.</p>
+                <a href="{{ path('app_product_index') }}" class="btn btn-primary">Continuer vos achats</a>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

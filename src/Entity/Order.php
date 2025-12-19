@@ -122,4 +122,23 @@ class Order
 
         return $this;
     }
+
+    public function getTotal(): float
+    {
+        $total = 0;
+        foreach ($this->orderItems as $item) {
+            $total += $item->getPrice() * $item->getQuantity();
+        }
+        return $total;
+    }
+
+    public function getFormattedCreatedAt(): string
+    {
+        return $this->createdAt ? $this->createdAt->format('d/m/Y H:i') : '';
+    }
+
+    public function getFormattedTotal(): string
+    {
+        return number_format($this->getTotal(), 2) . ' €';
+    }
 }

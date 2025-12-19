@@ -1,36 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Checkout{% endblock %}
+{% block title %}Validation de commande{% endblock %}
 
 {% block body %}
-    <h1>Checkout</h1>
+    <h1>Validation de commande</h1>
 
-    <form>
-        <h2>Shipping Information</h2>
-        
+    <div class="grid md-grid-cols-2" style="gap: 2rem;">
         <div>
-            <label>Full Name</label>
-            <input type="text" required>
-        </div>
-        
-        <div>
-            <label>Address</label>
-            <input type="text" required>
-        </div>
-        
-        <div>
-            <label>City</label>
-            <input type="text" required>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h4" style="margin-bottom: 1.5rem;">Informations de livraison</h2>
+                    <form method="post" action="{{ path('app_checkout_process') }}">
+                        <div class="form-group">
+                            <label for="fullName">Nom complet</label>
+                            <input type="text" name="fullName" value="{{ app.user.fullName }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Adresse</label>
+                            <input type="text" name="address" value="{{ app.user.address }}" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-2" style="gap: 1rem;">
+                            <div class="form-group">
+                                <label for="postalCode">Code Postal</label>
+                                <input type="text" name="postalCode" value="{{ app.user.postalCode }}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="city">Ville</label>
+                                <input type="text" name="city" value="{{ app.user.city }}" required>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_token" value="{{ csrf_token('checkout') }}">
+
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+                            Payer maintenant
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div>
-            <label>Postal Code</label>
-            <input type="text" required>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h4" style="margin-bottom: 1.5rem;">Résumé de la commande</h2>
+                    <div style="margin-bottom: 1rem;">
+                        {% for item in items %}
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>{{ item.product.name }} x{{ item.quantity }}</span>
+                                <span>{{ (item.product.price * item.quantity) }} €</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div style="border-top: 1px solid var(--color-border); padding-top: 1rem; display: flex; justify-content: space-between; font-weight: 700;">
+                        <span>Total</span>
+                        <span>{{ total }} €</span>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <h2>Payment</h2>
-        <p>Payment integration would go here.</p>
-
-        <button type="submit">Place Order</button>
-    </form>
+    </div>
 {% endblock %}
